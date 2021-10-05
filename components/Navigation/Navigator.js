@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StartPage from '../Screens/StartPage/StartPage';
 import SlideItem from '../Screens/FirstSlides/Slider';
-import MainPage from '../Screens/MainPage/MainPage';
+import HomePage from '../Screens/Home/HomePage';
 import LogIn from '../Screens/LogIn/LogIn';
 import SignUp from '../Screens/SignUp/SignUp';
 import Dashboard from '../Screens/Dashboard/Dashboard';
@@ -15,13 +15,13 @@ const Navigator = () => {
   return (
     <NavigationContainer>
          <Stack.Navigator 
-         initialRouteName="MainPage"  
+         initialRouteName="HomePage"  
          screenOptions={{
             headerShown: false,
           }}>
         <Stack.Screen name="StartPage"   component={StartPage} />
         <Stack.Screen name="SlideItem"   component={SlideItem} />        
-        <Stack.Screen name="MainPage"    component={MainPage} />
+        <Stack.Screen name="HomePage"    component={HomePage} />
         <Stack.Screen name="LogIn"       component={LogIn} />
         <Stack.Screen name="LogInSignUpScreen" component={LogInSignUpScreen} />
         <Stack.Screen name="SignUp"    component={SignUp} />
