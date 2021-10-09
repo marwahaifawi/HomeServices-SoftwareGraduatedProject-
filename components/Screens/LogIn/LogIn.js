@@ -22,10 +22,7 @@ export default function LogIn({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'MainPage' }],
-    })
+    navigation.navigate('UserHomePage', { email: email })
   }
 
   return (
