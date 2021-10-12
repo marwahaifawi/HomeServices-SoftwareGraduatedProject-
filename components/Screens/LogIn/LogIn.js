@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View,Text  } from 'react-native';
+import { TouchableOpacity, View,Text , TextInput  } from 'react-native';
 import Styles from './LogInStyles.js';
-import Background from '../../Background';
-import Logo from '../../Logo';
-import Header from '../../Header';
+import Background from '../Background';
+import Logo from '../Logo';
 import ButtonItem from '../../Buttons/Buttons';
-import TextInput from '../../TextInput';
 import { emailValidator } from '../../../helpers/emailValidator';
 import { passwordValidator } from '../../../helpers/passwordValidator';
 export default function LogIn({ navigation }) {
@@ -26,7 +24,6 @@ export default function LogIn({ navigation }) {
   return (
     <Background>
       <Logo />
-      <Header>Login</Header>
       <TextInput
         label="Email"
         returnKeyType="next"

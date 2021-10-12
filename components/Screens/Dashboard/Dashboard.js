@@ -1,8 +1,8 @@
 import React from 'react'
-import Background from '../../Background'
-import Logo from '../../Logo'
-import Header from '../../Header'
-import Paragraph from '../../Paragraph'
+import Background from '../../Screens/Background';
+import Logo from '../../Screens/Logo';
+import Header from '../../Texts/Header';
+import Paragraph from '../../Texts/Paragraph';
 import ButtonItem from '../../Buttons/Buttons'
 
 export default function Dashboard({ navigation }) {

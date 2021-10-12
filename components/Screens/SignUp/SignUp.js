@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 
 import { nameValidator } from "../../../helpers/nameValidator";
-import Background from "../../Background";
-import Logo from "../../Logo";
-import Header from "../../Header";
+import Background from "../Background";
+import Logo from "../Logo";
+import Header from '../../Texts/Header.js';
 import ButtonItem from "../../Buttons/Buttons";
-import TextInput from "../../TextInput";
-import BackButton from "../../BackButton";
+import TextInput from "../../Texts/TextInput";
 import { theme } from "../../../core/theme";
 import { emailValidator } from "../../../helpers/emailValidator";
 import { passwordValidator } from "../../../helpers/passwordValidator";

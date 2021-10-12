@@ -8,7 +8,6 @@ import LogIn from '../Screens/LogIn/LogIn';
 import SignUp from '../Screens/SignUp/SignUp';
 import TabsScreen from '../Screens/Home/TabsScreen';
 import Dashboard from '../Screens/Dashboard/Dashboard';
-import LogInSignUpScreen from '../Screens/LogInSignUpScreen/LogInSignUpScreen';
 import UserHomePage from '../Screens/Home/UserHomePage';
 import Services from '../services/Services';
 import ResetPasswordScreen from '../Screens/ResetPasswordScreen/ResetPasswordScreen';
@@ -29,7 +28,7 @@ const Navigator = () => {
         <Stack.Screen name="Services"    component={Services} />
         <Stack.Screen name="UserHomePage"    component={UserHomePage} />
         <Stack.Screen name="LogIn"       component={LogIn} />
-        <Stack.Screen name="LogInSignUpScreen" component={LogInSignUpScreen} />
+       
         <Stack.Screen name="SignUp"    component={SignUp} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen

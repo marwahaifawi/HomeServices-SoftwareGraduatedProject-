@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import Background from '../../Background'
-import BackButton from '../../BackButton'
-import Logo from '../../Logo'
-import Header from '../../Header'
-import TextInput from '../../TextInput'
+import Background from '../Background'
+import Logo from '../Logo'
+import Header from '../../Texts/Header'
+import TextInput from '../../Texts/TextInput'
 import ButtonItem from '../../Buttons/Buttons'
 import { emailValidator } from '../../../helpers/emailValidator'
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import SmallCards from "../Cards/SmallCards";
-import Title from "../Texts.js/Title";
+import Title from '../Texts/Title'
 const HorizantalList = ({ title, data }) => {
   return (
     <>

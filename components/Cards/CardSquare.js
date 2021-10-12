@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import Title from "../Texts.js/Title";
-import SubTitle from "../Texts.js/SubTitle";
+import Title from "../Texts/Title";
+import SubTitle from "../Texts/SubTitle";
 const CardSquare = ({style , styleImage , item , desc}) =>{
     const{servicename} = item;
     return (
