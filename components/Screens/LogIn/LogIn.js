@@ -6,10 +6,8 @@ import Logo from '../../Logo';
 import Header from '../../Header';
 import ButtonItem from '../../Buttons/Buttons';
 import TextInput from '../../TextInput';
-import BackButton from '../../BackButton';
 import { emailValidator } from '../../../helpers/emailValidator';
 import { passwordValidator } from '../../../helpers/passwordValidator';
-import {theme} from '../../../core/theme'
 export default function LogIn({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
@@ -22,7 +20,7 @@ export default function LogIn({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.navigate('UserHomePage', { email: email })
+    navigation.navigate('UserHomePage')
   }
 
   return (

@@ -13,11 +13,11 @@ var con = mysql.createConnection({
     port:'3306',
     user:'root',
     password:'', //empty for window
-    database: 'users'
+    database: 'application'
 
 });
 
-var server = app.listen(1341, function(){
+var server = app.listen(1342, function(){
   var host = server.address().address
   var port = server.address().port
   console.log("start");
@@ -29,8 +29,8 @@ con.connect(function(error){
   else console.log("connected");
 });
 
-app.get('/users', function(req, res){
-  con.query('select * from users', function(error, rows, fields){
+app.get('/application', function(req, res){
+  con.query('select * from services', function(error, rows, fields){
         if(error) console.log(error);
 
         else{
