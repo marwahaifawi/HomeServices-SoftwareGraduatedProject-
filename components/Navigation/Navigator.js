@@ -13,13 +13,14 @@ import Services from '../services/Services';
 import AuthScreen from '../Screens/AuthScreen';
 import AskAddSerInf from '../services/AskAddSerInf';
 import ResetPasswordScreen from '../Screens/ResetPasswordScreen/ResetPasswordScreen';
+import ShopStore from '../ShopStore/ShopStore';
 const Stack = createNativeStackNavigator();
 
 const Navigator = () => {
   return (
     <NavigationContainer>
          <Stack.Navigator 
-         initialRouteName="SignUp"  
+         initialRouteName="ShopStore"  
          screenOptions={{
             headerShown: false,
           }}>
@@ -30,6 +31,7 @@ const Navigator = () => {
         <Stack.Screen name="Services"    component={Services} />
         <Stack.Screen name="UserHomePage"    component={UserHomePage} />
         <Stack.Screen name="LogIn"       component={LogIn} />
+        <Stack.Screen name="ShopStore"       component={ShopStore} />
 
         <Stack.Screen name="AuthScreen"       component={AuthScreen} />
         <Stack.Screen name="AskAddSerInf"       component={AskAddSerInf} />
