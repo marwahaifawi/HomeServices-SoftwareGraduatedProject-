@@ -10,6 +10,8 @@ import TabsScreen from '../Screens/Home/TabsScreen';
 import Dashboard from '../Screens/Dashboard/Dashboard';
 import UserHomePage from '../Screens/Home/UserHomePage';
 import Services from '../services/Services';
+import AuthScreen from '../Screens/AuthScreen';
+import AskAddSerInf from '../services/AskAddSerInf';
 import ResetPasswordScreen from '../Screens/ResetPasswordScreen/ResetPasswordScreen';
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +19,7 @@ const Navigator = () => {
   return (
     <NavigationContainer>
          <Stack.Navigator 
-         initialRouteName="HomePage"  
+         initialRouteName="SignUp"  
          screenOptions={{
             headerShown: false,
           }}>
@@ -28,7 +30,9 @@ const Navigator = () => {
         <Stack.Screen name="Services"    component={Services} />
         <Stack.Screen name="UserHomePage"    component={UserHomePage} />
         <Stack.Screen name="LogIn"       component={LogIn} />
-       
+
+        <Stack.Screen name="AuthScreen"       component={AuthScreen} />
+        <Stack.Screen name="AskAddSerInf"       component={AskAddSerInf} />
         <Stack.Screen name="SignUp"    component={SignUp} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen

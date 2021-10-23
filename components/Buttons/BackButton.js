@@ -1,25 +1,13 @@
-import React from 'react'
-import { TouchableOpacity, Image, StyleSheet } from 'react-native'
-
+import React from 'react';
+import { TouchableOpacity} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { theme } from '../../core/theme';
 export default function BackButton({ goBack }) {
   return (
-    <TouchableOpacity onPress={goBack} style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require('../assets/arrow_back.png')}
-      />
+    <TouchableOpacity onPress={goBack}  >
+   
+        <Ionicons name="ios-arrow-back-circle-outline" size={33} color={theme.colors.primary} />
+     
     </TouchableOpacity>
-  )
-}
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 10 ,
-    left: 4,
-  },
-  image: {
-    width: 24,
-    height: 24,
-  },
-})
+  );
+};

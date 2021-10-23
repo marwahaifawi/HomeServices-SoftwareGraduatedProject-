@@ -20,10 +20,10 @@ const SlideItem =({route, navigation})=>{
       <View style={Styles.buttonsView}>
       <ButtonItem
        content='Skip' 
-       OnPress={()=> navigation.navigate('MainPage')} />
+       OnPress={()=> navigation.navigate('HomePage')} />
       <ButtonItem 
       content='Next' 
-      OnPress={()=> j === 5 ? navigation.navigate('MainPage') : navigation.setParams({title: SlidesInfo[j+1].title , subTitle: SlidesInfo[j+1].subTitle ,image:SlidesInfo[j+1].image , i:i+1})}  />
+      OnPress={()=> j === 5 ? navigation.navigate('HomePage') : navigation.setParams({title: SlidesInfo[j+1].title , subTitle: SlidesInfo[j+1].subTitle ,image:SlidesInfo[j+1].image , i:i+1})}  />
       </View>   
      
     </View>   
