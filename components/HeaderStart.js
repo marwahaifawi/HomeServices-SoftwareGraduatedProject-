@@ -6,8 +6,9 @@ const HeaderStart = () => {
     <>
       <CardSquare
         item= { {servicename: "Choose Maintenance Service", id: 11 }}
-        desc="Then add your service information to get aour worker list."
+        desc="Then add your service information to get our worker list."
         FontFamily={{fontFamily:'FontThree'}}
+        imagename={require('../assets/headImage.png')}
       
       />
     </>

@@ -1,36 +1,23 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Button } from "react-native";
-import { nameValidator } from "../../../helpers/nameValidator";
 import Logo from "../Logo";
 import TextInput from "../../Texts/TextInput";
 import { theme } from "../../../core/theme";
-import { emailValidator } from "../../../helpers/emailValidator";
-import { passwordValidator } from "../../../helpers/passwordValidator";
 import BackButton from '../../Buttons/BackButton';
 import Title from "../../Texts/Title";
 
 export default function SignUp({ navigation }) {
-  const [userName, setName] = useState({ value: "", error: "" });
-  const [emailAdd, setEmail] = useState({ value: "", error: "" });
-  const [passwordFirst, setPassword] = useState({ value: "", error: "" });
+  const [userName, setName] = useState({ value:""});
+  const [emailAdd, setEmail] = useState({ value: ""});
+  const [passwordFirst, setPassword] = useState({ value: ""});
   const onSignUpPressed = () => {
-    const nameError = nameValidator(userName.value);
-    const emailError = emailValidator(emailAdd.value);
-    const passwordError = passwordValidator(passwordFirst.value);
-    if (emailError || passwordError || nameError) {
-      setName({ ...userName, error: nameError });
-      setEmail({ ...emailAdd, error: emailError });
-      setPassword({ ...passwordFirst, error: passwordError });
-      return;
-    }
-    else {
-        fetch("https://192.168.1.110:1321/signup", {
+        fetch("http://192.168.1.104:1321/signup", {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-         body: JSON.stringify({
+         body: JSON.stringify({ 
             emailAdd: emailAdd,
             passwordFirst: passwordFirst,
             userName: userName,
@@ -40,29 +27,19 @@ export default function SignUp({ navigation }) {
           .then((response) => response.json())
           .then((res) => {
             if (res.success === true) {
-              alert(res.message);
-              this.props.navigation.reset({
+              navigation.reset({
                 //Using reset avoid you to go back to login Screen
                 index: 0,
                 routes: [
                   {
                     name: "HomePage",
-                  /*  params: {
-                      name: this.state.username,
-                      weight: this.state.weight,
-                      height: this.state.height,
-                      gender: this.state.value,
-                      age: this.state.age,
-                      emailsign: this.state.emailsign,
-                      firstname: this.state.firstname,
-                      passwordsign: this.state.passwordsign,
-                      lastname: this.state.lastname,
-                      country: this.state.country,
-                    },*/
+                    params: {
+                      name: userName,
+                    },
                   },
                 ],
               });
-            } 
+            }
             else {
               alert(res.message);
               console.log(res);
@@ -71,10 +48,9 @@ export default function SignUp({ navigation }) {
           })
           .done();
       };
-    };
-
     return (
-      <><View style={{ padding: 20, }}><BackButton goBack={() => navigation.navigate('HomePage')} /></View><View style={styles.container}>
+      <>
+        <View style={styles.container}>
 
         <Logo />
         <Title color={{ color: theme.colors.primary }} size={{ fontSize: 20 }} fontFamily={{ fontFamily: 'FontThree' }}>Create New Account</Title>
@@ -83,18 +59,14 @@ export default function SignUp({ navigation }) {
           label="Name"
           returnKeyType="next"
           value={userName.value}
-          onChangeText={(text) => setName({ value: text, error: "" })}
-          error={!!userName.error}
-          errorText={userName.error}
+          onChangeText={(text) => setName({ value: text})}
           placeholder="Name" />
         <TextInput
           style={styles.textInput}
           label="Email"
           returnKeyType="next"
           value={emailAdd.value}
-          onChangeText={(text) => setEmail({ value: text, error: "" })}
-          error={!!emailAdd.error}
-          errorText={emailAdd.error}
+          onChangeText={(text) => setEmail({ value: text})}
           autoCapitalize="none"
           autoCompleteType="email"
           textContentType="emailAddress"
@@ -105,23 +77,23 @@ export default function SignUp({ navigation }) {
           label="Password"
           returnKeyType="done"
           value={passwordFirst.value}
-          onChangeText={(text) => setPassword({ value: text, error: "" })}
-          error={!!passwordFirst.error}
-          errorText={passwordFirst.error}
+          onChangeText={(text) => setPassword({ value: text})}
           placeholder="Password"
           secureTextEntry={true}
            />
-        <View style={styles.button}>
-          <Button
-            onPress={onSignUpPressed}
-            title={'Sign Up'}
-            color={theme.colors.surface} /></View>
+        <View style={styles.button}>           
+            <TouchableOpacity onPress={onSignUpPressed} >
+          <Text style={{color: theme.colors.surface, fontSize:20 , fontWeight: 'bold' , fontFamily:'FontTwo' }}>
+            Sign Up
+          </Text>
+        </TouchableOpacity>
+            </View>
 
         <View style={styles.row}>
-          <Text style={{ color: theme.colors.primary, fontFamily: 'FontThree' }}>
+          <Text style={{ fontSize:15, color: theme.colors.primary, fontFamily: 'FontThree' }}>
             Already have an account?{" "}
           </Text>
-          <TouchableOpacity onPress={() => navigation.replace("LogIn")}>
+          <TouchableOpacity onPress={() => navigation.navigate("LogIn")}>
             <Text style={styles.link}>Login</Text>
           </TouchableOpacity>
         </View></View></>
@@ -150,12 +122,16 @@ export default function SignUp({ navigation }) {
 
     },
     button: {
-      backgroundColor: theme.colors.primary,
-      fontFamily: 'FontThree',
-      fontSize: 20,
-      width: 100,
-      borderRadius: 50,
-      marginTop: 10
+      backgroundColor:theme.colors.primary,
+      fontFamily:'FontThree', 
+      fontSize:20,
+      width:100,
+      borderRadius:50, 
+      marginTop:10,
+     width:100,
+     height:40,
+     justifyContent: 'center',
+     alignItems: 'center'
 
     },
     row: {
@@ -165,6 +141,7 @@ export default function SignUp({ navigation }) {
     link: {
       fontWeight: "bold",
       color: theme.colors.primary,
-      fontFamily: 'FontTwo'
+      fontFamily: 'FontTwo',
+      fontSize:17
     },
   });

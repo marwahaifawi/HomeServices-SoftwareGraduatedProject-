@@ -10,9 +10,8 @@ const CardSquare = ({ style, styleImage, item, desc, size, FontFamily , OnPress 
   const Name = name;
   return (
     <TouchableWithoutFeedback onPress={OnPress} >
-      <View style={[styles.container, style]}>
-   
-        <Image style={[styles.HeadImage, styleImage]} source={{imagename}} />
+      <View style={[styles.container, style]}> 
+        <Image style={[styles.HeadImage, styleImage]} source={imagename} />
         <MaterialIcons name={Name} size={38} color={theme.colors.secondary} />
         <View style={styles.contentContainer}>
           <Title fontFamily={FontFamily} size={size}>{servicename}</Title>
@@ -20,7 +19,6 @@ const CardSquare = ({ style, styleImage, item, desc, size, FontFamily , OnPress 
         </View>
       </View>
     </TouchableWithoutFeedback>
-
   )
 }
 const styles = StyleSheet.create({

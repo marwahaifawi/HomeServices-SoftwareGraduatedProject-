@@ -7,7 +7,7 @@ const SmallCards = ({item , navigation , OnPress}) => {
 
     return (
      
-      <CardSquare name={item.servicename} OnPress={OnPress} FontFamily={{fontFamily:'FontTwo'}} size={{fontSize:15}} item= {item} style={ styles.container} styleImage={styles.stylesImage}/>
+      <CardSquare name={item.name} OnPress={OnPress} FontFamily={{fontFamily:'FontTwo'}} size={{fontSize:15}} item= {item} style={ styles.container} styleImage={styles.stylesImage}/>
 
        );
 }

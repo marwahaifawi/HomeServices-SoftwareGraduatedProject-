@@ -3,7 +3,6 @@ import { Text, View, Image} from 'react-native';
 import Styles from './slidesStyle';
 import SlidesInfo from '../SlidesList/SlidesInfo'
 import ButtonItem from '../../Buttons/Buttons';
-import { render } from 'react-dom';
 const SlideItem =({route, navigation})=>{
   const {title , subTitle , image , i}= route.params;
   let j = i === 3 ? j=5 : j=i ;

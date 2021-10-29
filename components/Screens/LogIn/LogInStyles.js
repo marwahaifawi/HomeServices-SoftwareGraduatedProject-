@@ -13,7 +13,11 @@ StyleSheet.create({
       fontSize:20,
       width:100,
       borderRadius:50, 
-      marginTop:10
+      marginTop:10,
+     width:100,
+     height:40,
+     justifyContent: 'center',
+     alignItems: 'center'
      
      },
     textInput:{
@@ -39,17 +43,19 @@ StyleSheet.create({
       marginTop: 4,
     },
     forgot: {
-      fontSize: 13,
+      fontSize: 15,
       color: theme.colors.primary,
       fontFamily:'FontTwo'
     },
     link: {
       fontWeight: "bold",
       color: theme.colors.primary,
-      fontFamily:'FontTwo'
+      fontFamily:'FontTwo',
+      fontSize:16,
+      marginTop:5
     },
     texts:{
-      fontSize: 13,
+      fontSize: 15,
       color: theme.colors.primary,
       marginTop:5
     },

@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image ,Pressable,TouchableOpacity} from 'react-native';
+import { Text, View, StyleSheet, Image ,TouchableOpacity} from 'react-native';
 import Styles from './StartPageStyle';
 import SlidesInfo from '../SlidesList/SlidesInfo';
-import {theme} from '../../../core/theme';
 export default function StartPage ({navigation}){
   return (
     <View style={Styles.startPage}>
@@ -26,8 +25,6 @@ export default function StartPage ({navigation}){
         عربي
         </Text></TouchableOpacity>
       </View>
-
-
       </View>
   );
 };

@@ -13,7 +13,7 @@ var con = mysql.createConnection({
   password: "",
   database: "application",
 });
-const hostname = "192.168.1.110";
+const hostname = "192.168.1.104";
 const port = "1321";
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
@@ -41,9 +41,9 @@ app.get("/users", function (req, res) {
 
 //----------------------------------------------------SignUp
 app.post("/signup", function (req, res) {
-  var userName = req.body.userName;
-  var emailAdd = req.body.emailAdd;
-  var passwordFirst = req.body.passwordFirst;
+  var userName = req.body.userName.value;
+  var emailAdd = req.body.emailAdd.value;
+  var passwordFirst = req.body.passwordFirst.value;
   if (
     emailAdd &&
     userName &&
@@ -51,15 +51,45 @@ app.post("/signup", function (req, res) {
   )  {
     bcrypt.hash(passwordFirst, 10, function (error, hash) {
       con.query(
-                    "INSERT INTO users (name,email,password) VALUES (?,?,?)" , 
+        "SELECT * FROM users where email=?",
+        [emailAdd],
+        function (error, row) {
+          if (row.length > 0) {
+            res.send({ message: "This email already exists" });
+          } else {
+            con.query(
+              "SELECT * FROM users where name=?",
+              [userName],
+              function (error, row) {
+                if (row.length > 0) {
+                  res.send({ message: "This username already exists" });
+                } else {
+                  var sql =
+                    "INSERT INTO users (name,password,email) VALUES ?";
+                  var values = [
                     [
                       userName,
+                      hash,
                       emailAdd,
-                      passwordFirst,
                     ],
-                    (err , result)=> {
-                 console.log(err);          
-                   });
+                  ];
+                }
+                  con.query(sql, [values], function (error, row) {
+                    if (error) throw error;
+                    res.send({
+                      success: true,
+                      message: "Welcome to Application",
+                    });
                   });
                 }
-              });
+            );
+          }
+        }
+      );
+    });
+  } else {
+    res.send({
+      message: "Please fill all the fields",
+    });
+  }
+});

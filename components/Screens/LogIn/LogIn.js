@@ -26,9 +26,7 @@ export default function LogIn({ navigation }) {
   return (
 
     <>
-    <View style={{ padding: 20,}}><BackButton goBack={() => navigation.navigate('HomePage')} /></View>
-    
-    
+       
     <View style={Styles.container}>
       <Logo />
       <Title color={{ color: theme.colors.primary }} size={{ fontSize: 20 }} fontFamily={{ fontFamily: 'FontThree' }}>Login</Title>
@@ -63,13 +61,16 @@ export default function LogIn({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={Styles.button}>
-        <Button
-          onPress={onLoginPressed}
-          title={'Login'}
-          color={theme.colors.surface} /></View>
+        <TouchableOpacity onPress={onLoginPressed} >
+          <Text style={{color: theme.colors.surface, fontSize:20 , fontWeight: 'bold' , fontFamily:'FontTwo' }}>
+            Login
+          </Text>
+        </TouchableOpacity>
+          
+          </View>
       <View style={Styles.row}>
-        <Text style={{ color: theme.colors.primary, fontFamily: 'FontThree' }}>Don’t have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.replace('SignUp')}>
+        <Text style={{ color: theme.colors.primary, fontFamily: 'FontThree', fontSize:14 , marginTop:5 }}>Don’t have an account?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={Styles.link}> Sign up</Text>
         </TouchableOpacity>
       </View>

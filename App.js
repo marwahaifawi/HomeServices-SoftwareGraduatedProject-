@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Navigator from './components/Navigation/Navigator';
+import TabsScreen from './components/Screens/Home/TabsScreen';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 let fonts = {
-'FontOne': require('./assets/fonts/Caveat-VariableFont_wght.ttf'),
-'FontTwo': require('./assets/fonts/Handlee-Regular.ttf'),
-'FontThree':require('./assets/fonts/Righteous-Regular.ttf'),
+  'FontOne': require('./assets/fonts/Caveat-VariableFont_wght.ttf'),
+  'FontTwo': require('./assets/fonts/Handlee-Regular.ttf'),
+  'FontThree': require('./assets/fonts/Righteous-Regular.ttf'),
 };
 export default class App extends React.Component {
   state = {
@@ -23,10 +24,11 @@ export default class App extends React.Component {
   render() {
     if (this.state.fontsLoaded) {
       return (
-        <Navigator />
-    );}
+       <Navigator />
+      );
+    }
     else {
       return <AppLoading />;
     }
-}
+  }
 }
