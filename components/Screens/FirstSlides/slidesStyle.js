@@ -18,14 +18,15 @@ const Styles = StyleSheet.create({
            marginTop:20,
            alignSelf:'center',
            fontWeight:'bold',
+           fontFamily:'FontThree',
            color:'#447493'
 
           },
           subTitle:{
-            fontSize:15,
+            fontSize:17,
             marginTop:15,
             alignSelf:'center',
-            fontWeight:'500',
+            fontFamily:'FontTwo',
             color:'#447493'
           },
           buttonsView:{

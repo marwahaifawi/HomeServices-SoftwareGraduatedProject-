@@ -3,20 +3,28 @@ import { Text, View, Image} from 'react-native';
 import Styles from './slidesStyle';
 import SlidesInfo from '../SlidesList/SlidesInfo'
 import ButtonItem from '../../Buttons/Buttons';
-const SlideItem =({route, navigation})=>{
+import * as Animatable from 'react-native-animatable';
+
+const SlideItem =({route, navigation , animation})=>{
   const {title , subTitle , image , i}= route.params;
   let j = i === 3 ? j=5 : j=i ;
   return(
   <View style={Styles.container}>
-      <Image
+      <Animatable.Image
+      animation='zoomInUp'
+      duration={4000}
+      iterationDelay={1000}
+      iterationCount={4}
         source={image}
         style={Styles.slideImage} />
         <View style={Styles.textsView}>
-        <Text style={Styles.title}>{title}</Text>
-        <Text style={Styles.subTitle}>{subTitle}</Text> 
+        <Text       
+ style={Styles.title}>{title}</Text>
+        <Text     
+ style={Styles.subTitle}>{subTitle}</Text>
         </View>
 
-      <View style={Styles.buttonsView}>
+      <View  style={Styles.buttonsView}>
       <ButtonItem
        content='Skip' 
        OnPress={()=> navigation.navigate('HomePage')} />

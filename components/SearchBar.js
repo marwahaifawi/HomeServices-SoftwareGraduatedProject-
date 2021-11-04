@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 const SearchBar = () => {
     return (
         <View style={styles.container}>
-            <TextInput style={styles.searchInput} placeholder='Search services' />
+            <TextInput style={styles.searchInput} placeholder='Search here' />
             <Pressable>
                 <MaterialCommunityIcons name="home-search-outline" size={23} color='grey' />
             </Pressable>

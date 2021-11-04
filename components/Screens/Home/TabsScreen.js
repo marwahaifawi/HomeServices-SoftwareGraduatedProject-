@@ -10,11 +10,13 @@ import { theme } from '../../../core/theme';
 import Services from '../../services/Services';
 import {View } from 'react-native';
 const Tabs = createBottomTabNavigator();
-const TabsScreen = () => {
+const TabsScreen = ({name ,email}) => {
   return (
     <Tabs.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarActiveBackgroundColor:theme.colors.secondary,
+        tabBarActiveTintColor:theme.colors.secondary
       }}
       tabBarOptions={{
         showLabel: false,
@@ -23,37 +25,43 @@ const TabsScreen = () => {
     >
       <Tabs.Screen name="Home" component={Services}
         options={{
+          tabBarActiveTintColor: theme.colors.secondary,
+          tabBarActiveBackgroundColor:theme.colors.secondary,
           tabBarIcon: ({ focused }) => (
             <View>
 
-              <FontAwesome name="home" size={25} color={focused ? theme.colors.primary : "gray"} />
+              <FontAwesome name="home" size={focused ? 25: 20} color={focused ? theme.colors.surface : "gray"} />
 
             </View>
           ),
         }} />
       <Tabs.Screen name="Store" component={ShopStore} options={{
+            tabBarActiveBackgroundColor: theme.colors.primary,
         tabBarIcon: ({ focused }) => (
           <View>
-            <Fontisto name="shopping-store" size={20} color={focused ? theme.colors.primary : 'gray'} />
+            <Fontisto name="shopping-store" size={focused ? 25: 20} color={focused ? theme.colors.surface : 'gray'} />
           </View>
 
         ),
       }} />
       <Tabs.Screen name="Notifications" component={Notification} options={{
-        tabBarIcon: ({ focused }) => (
+          tabBarActiveBackgroundColor:theme.colors.secondary,
+          tabBarIcon: ({ focused }) => (
           <View>
 
-            <Ionicons name="notifications" size={24} color={focused ? theme.colors.primary : 'gray'} />
+            <Ionicons name="notifications" size={focused ? 25: 20} color={focused ? theme.colors.surface  : 'gray'} />
 
           </View>
 
         ),
       }} />
       <Tabs.Screen name="Chat" component={Chatting} options={{
+                    tabBarActiveBackgroundColor: theme.colors.primary,
+
         tabBarIcon: ({ focused }) => (
           <View>
 
-            <Ionicons name="chatbubbles-sharp" size={24} color={focused ? theme.colors.primary : 'gray'} />
+            <Ionicons name="chatbubbles-sharp" size={focused ? 27: 20} color={focused ? theme.colors.surface : 'gray'} />
           </View>
 
         ),

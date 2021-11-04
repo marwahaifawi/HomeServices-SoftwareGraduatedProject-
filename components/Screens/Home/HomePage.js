@@ -1,5 +1,4 @@
 import * as React from "react";
-import Services from "../../services/Services";
 import LogIn from "../../Screens/LogIn/LogIn";
 import DrawerContent from '../../Navigation/DrawerContent';
 import AboutUs from "../AboutUs/AboutUs";
@@ -18,7 +17,7 @@ const HomePage=()=>{
     <>
     <Drawer.Navigator
       ScreenOptions={{
-        headerShown: false,
+        headerShown: true,
       }}
       drawerContent={props => <DrawerContent {...props} />}
       initialRouteName="Home Services">

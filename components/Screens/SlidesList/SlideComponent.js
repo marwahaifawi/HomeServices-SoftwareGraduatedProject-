@@ -3,16 +3,18 @@ import { Text, View , FlatList, Platform, TouchableOpacity, Image, Alert } from 
 import Styles from './SlidesComponentStyle';
 import SlidesInfo from './SlidesInfo';
 import SlideItem from '../FirstSlides/Slider';
+import * as Animatable from 'react-native-animatable';
+
 export default function SlideComponent ({navigation})
 {
     return(
-        <View style={Styles.container}>
+        <Animatable.View  style={Styles.container}>
            <FlatList
            data={SlidesInfo}
            renderItem={(item)=>
-           <SlideItem slide={item}/>}
+           <SlideItem  slide={item}/>}
            />
-        </View>
+        </Animatable.View>
     );
   };
  

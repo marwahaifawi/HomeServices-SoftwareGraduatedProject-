@@ -2,14 +2,16 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image ,TouchableOpacity} from 'react-native';
 import Styles from './StartPageStyle';
 import SlidesInfo from '../SlidesList/SlidesInfo';
+import * as Animatable from 'react-native-animatable';
+
 export default function StartPage ({navigation}){
   return (
     <View style={Styles.startPage}>
-        <Image
+        <Animatable.Image animation='rubberBand'
         source={require("../../../assets/logo.png")}
         resizeMode="contain"
         style={Styles.imageLogo}
-      ></Image>
+      ></Animatable.Image>
       <View style={Styles.buttonsView}>
         <TouchableOpacity
           style={Styles.buttonOne}

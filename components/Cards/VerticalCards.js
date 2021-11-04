@@ -2,13 +2,22 @@ import React from 'react'
 import { View, Text , Dimensions, StyleSheet } from 'react-native';
 import CardSquare from './CardSquare';
 import { theme } from '../../core/theme';
+import * as Animatable from 'react-native-animatable';
+
 const {width} = Dimensions.get('window');
 const VerticalCards = ({item , OnPress}) => {
-
-    return (
-     
-      <CardSquare name={item.name} OnPress={OnPress} FontFamily={{fontFamily:'FontTwo'}} size={{fontSize:15}} item= {item} style={ styles.container} styleImage={styles.stylesImage}/>
-
+    return (    
+      <CardSquare 
+      iconname={item.iconname} 
+      OnPress={OnPress} 
+      FontFamily={{fontFamily:'FontTwo'}} 
+      size={{fontSize:15}} 
+      item= {item} 
+      style={ styles.container} 
+      styleImage={styles.stylesImage}
+      imagename={item.image}
+      price={String(item.price)}
+      />
        );
 }
 const styles = StyleSheet.create({

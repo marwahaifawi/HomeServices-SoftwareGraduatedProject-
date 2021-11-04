@@ -3,6 +3,7 @@ import { theme } from '../../../core/theme';
 const Styles = StyleSheet.create({
   startPage: {
     flex: 1,
+    backgroundColor:'#fff'
   },
   buttonsView: {
     flexDirection: "row",

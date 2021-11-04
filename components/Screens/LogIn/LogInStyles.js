@@ -37,6 +37,7 @@ StyleSheet.create({
     justifyContent:'center', 
     alignItems:'center', 
     padding: 50,
+    backgroundColor:'white'
    },
     row: {
       flexDirection: 'row',

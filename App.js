@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Navigator from './components/Navigation/Navigator';
-import TabsScreen from './components/Screens/Home/TabsScreen';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 let fonts = {

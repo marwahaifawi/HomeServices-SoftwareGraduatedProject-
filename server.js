@@ -13,7 +13,7 @@ var con = mysql.createConnection({
   password: "",
   database: "application",
 });
-const hostname = "192.168.1.104";
+const hostname = "192.168.1.110";
 const port = "1321";
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
@@ -91,5 +91,48 @@ app.post("/signup", function (req, res) {
     res.send({
       message: "Please fill all the fields",
     });
+  }
+});
+//------------------------------------------------------get services
+app.get("/getservices", function (req, res) {
+  con.query("SELECT * FROM services", function (error, results, fields) {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+//----------------------------------------------------Login
+app.post("/login", function (req, res) {
+  var email = req.body.email; //value from textfield
+  var password = req.body.password; //value from textfield
+  if (email && password) {
+    // if user fill all text input
+    con.query(
+      "SELECT * FROM users where email=?", //update
+      [email],
+      function (error, row) {
+        if (row.length < 1) {
+          res.send({
+            success: false,
+            message: "Incorrect Email and/or Password!",
+          });
+        } 
+        else if (bcrypt.compareSync(password, row[0].password)) {
+            res.send({
+              success: true,
+              name: row[0].name,
+              email:row[0].email
+            });
+          }
+        else {
+          res.send({
+            success: false,
+            message: "Incorrect Email and/or Password!",
+          });
+        }
+      }
+    );
+  } else {
+    res.send({ message: "Please enter Username and Password!" });
+    res.end();
   }
 });

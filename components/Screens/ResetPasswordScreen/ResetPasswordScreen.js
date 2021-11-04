@@ -26,7 +26,7 @@ export default function ResetPasswordScreen({ navigation }) {
         label="E-mail address"
         returnKeyType="done"
         value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
+        onChangeText={(text) => setEmail({ value: text})}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"

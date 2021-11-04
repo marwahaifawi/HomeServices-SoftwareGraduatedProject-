@@ -27,7 +27,7 @@ return (
                         </View>
                     </View>
 
-                    <Drawer.Section style={styles.drawerSection}>
+                    <Drawer.Section  style={styles.drawerSection}>
                     <DrawerItem 
                             icon={({color, size}) => (
                               <Icon name="home-export-outline" size={size} color={color} />
@@ -41,7 +41,7 @@ return (
                               <Icon name="face-outline" size={size} color={color}/>
                             )}
                             label="Profile"
-                            onPress={() => {navigation.navigate("Profile")}}
+                            onPress={() => {navigation.navigate("LogIn")}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (

@@ -1,7 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import SmallCards from "../Cards/SmallCards";
-import Title from '../Texts/Title'
+import VerticalCards from "../Cards/VerticalCards";
+import Title from '../Texts/Title';
+import * as Animatable from 'react-native-animatable';
+
 const HorizantalList = ({ title, data , fontFamily }) => {
   return (
     <>
@@ -11,11 +13,14 @@ const HorizantalList = ({ title, data , fontFamily }) => {
         keyExtractor={(item) => String(item.id)}
         horizontal 
         showsHorizontalScrollIndicator="false"
-        renderItem={({ item }) => <SmallCards item={item} />}
+        renderItem={({ item }) => <VerticalCards item={item} />}
       />
     </>
   );
 };
-const style = StyleSheet.create({});
+const style = StyleSheet.create({
+
+
+});
 
 export default HorizantalList;
