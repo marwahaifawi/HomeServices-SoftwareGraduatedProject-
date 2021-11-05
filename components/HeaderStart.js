@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text , StyleSheet , Image } from "react-native";
 import CardSquare from "./Cards/CardSquare";
-const HeaderStart = () => {
+import AboutUs from '../components/Screens/AboutUs/AboutUs';
+const HeaderStart = ({navigation}) => {
   return (
     <>
       <CardSquare
@@ -9,7 +10,6 @@ const HeaderStart = () => {
         desc="Then add your service information to get our worker list."
         FontFamily={{fontFamily:'FontThree'}}
         imagename={require('../assets/headImage.png')}
-      
       />
     </>
   );

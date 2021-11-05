@@ -6,19 +6,51 @@ import { theme } from '../../../core/theme.js';
 import Title from '../../Texts/Title.js';
 import Background from '../Background';
 //import { AuthContext } from '../../context.js';
+
 export const AuthContext = React.createContext();
 
 export default function LogIn({ navigation }) {
   const [email, setEmail] = useState({ value: ''})
   const [password, setPassword] = useState({ value: ''})
-  
-  const {signIn} = React.useContext(AuthContext);
+
   const onLoginPressed = () => {
-   console.log('login');
+    fetch("http://192.168.1.108:4008/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.success === true) {
+          navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: "HomePage",
+                params: {
+                  name: res.name,
+                email: res.email
+                },
+              },
+            ],
+          });
+        navigation.navigate("HomePage", {
+            name: res.name,
+      email:res.email
+          });
+        } else {
+          alert(res.message);
+        }
+      })
+      .done();
   };
-
   return (
-
     <>
        <Background>
        <View style={Styles.container}>
@@ -51,7 +83,7 @@ export default function LogIn({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={Styles.button}>
-        <TouchableOpacity onPress={signIn() } >
+        <TouchableOpacity onPress={()=> onLoginPressed } >
           <Text style={{color: theme.colors.surface, fontSize:20 , fontWeight: 'bold' , fontFamily:'FontTwo' }}>
             Login
           </Text>

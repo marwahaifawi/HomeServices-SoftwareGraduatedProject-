@@ -4,8 +4,6 @@ import SmallCards from "../Cards/SmallCards";
 import Title from '../Texts/Title';
 import { theme } from "../../core/theme";
 import { FontAwesome } from '@expo/vector-icons';
-import * as Animatable from 'react-native-animatable';
-
 const ProductsList = ({ title, data , fontFamily , OnPress , navigation }) => {
   return (
     <>

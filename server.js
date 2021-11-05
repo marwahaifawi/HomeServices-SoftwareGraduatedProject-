@@ -13,7 +13,7 @@ var con = mysql.createConnection({
   password: "",
   database: "application",
 });
-const hostname = "192.168.1.110";
+const hostname = "192.168.1.108";
 const port = "1321";
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

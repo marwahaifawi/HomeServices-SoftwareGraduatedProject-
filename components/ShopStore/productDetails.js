@@ -1,70 +1,100 @@
 import React, {useEffect, useState, useContext} from 'react';
+import {theme} from '../../core/theme';
 import {
   Text, 
   Image, 
   View, 
   ScrollView, 
   SafeAreaView, 
-  Button, 
+  TouchableOpacity,
   StyleSheet
   } from 'react-native';
-import { getProduct } from './Products';
-import { CartContext } from './CartContext';
-export function ProductDetails({route, navigation}) {
-    const {products}=route.params;
+  import { Fontisto } from '@expo/vector-icons';
+
+export function ProductDetails({navigation}) {
+
   return (
     <SafeAreaView>
       <ScrollView>
-        <Image
+        <View style={styles.detaileCart}>
+          <Image
           style={styles.image}
-          source={products.image}
+          source={require("../../assets/products/clean.png")}
         />
         <View style={styles.infoContainer}>
-          <Text style={styles.name}>{JSON.stringify(products.name)}</Text>
-          <Text style={styles.price}>$ {products.price}</Text>
-          <Text style={styles.description}>{products.description}</Text>
-            <Button
-            title="Add to cart"
-            />
+          <Text style={styles.name}>name</Text>
+          <Text style={styles.price}>10 nis</Text>
+          <Text style={styles.description}>descriptionjhsdkfharutgariugsaljfdblshdgvljkjdflksjaytjhgjhgiaegfadjf;af
+          zdshfhz</Text>
+          <View style={styles.ButtonContainer}>
+             <TouchableOpacity>
+            <View style={styles.addToCartButton}>
+            <Fontisto name="shopping-basket-add" size={20} color={theme.colors.surface} />
+
+                   <Text style={styles.addToCart}>
+                      Add To Cart
+                   </Text>
+               </View>
+     
+             </TouchableOpacity>
+          </View>
         </View>
+        </View>
+        
       </ScrollView>
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 16,
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    shadowColor: 'black',
-    shadowOffset: {
-      height: 0,
-      width: 0,
-    },
-    elevation: 1,
-    marginVertical: 20,
-  },
+detaileCart:{
+    backgroundColor:'white',
+    height:'100%',
+},
   image: {
-    height: 300,
-    width: '100%'
+    height: 400,
+    width: '100%',
+    resizeMode:'contain',
+    alignSelf:'center',
   },
   infoContainer: {
     padding: 16,
+    marginBottom:15
   },
   name: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontFamily: 'FontThree',
+    marginBottom: 10,
+
   },
   price: {
     fontSize: 16,
-    fontWeight: '600',
     marginBottom: 8,
+    fontFamily:'FontThree',
   },
   description: {
     fontSize: 16,
-    fontWeight: '400',
     color: '#787878',
-    marginBottom: 16,
+  
   },
+  ButtonContainer:{
+    height:40,
+    justifyContent:'center',
+    borderRadius: 16,
+    width:'92%',
+    backgroundColor: theme.colors.secondary,
+    marginTop: 50,
+    alignSelf:'center'
+ },
+ addToCart:{
+    alignSelf:'center',
+    fontSize:18,
+    fontFamily:'FontThree',
+    color:theme.colors.surface,
+    paddingLeft:10
+
+ },
+ addToCartButton:{
+    flexDirection:'row',
+    justifyContent:'center',
+ }
 });

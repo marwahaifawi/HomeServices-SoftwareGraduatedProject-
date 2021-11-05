@@ -1,7 +1,5 @@
 import React from "react";
 import ProductsList from "../lists/ProductsList";
-import * as Animatable from 'react-native-animatable';
-
 const ProductsView = ({ data , OnPress}) => {
     return   <ProductsList 
     OnPress={OnPress}  

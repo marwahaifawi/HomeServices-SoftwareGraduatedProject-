@@ -8,6 +8,7 @@ import AuthScreen from '../Screens/AuthScreen';
 import {CartProvider} from '../ShopStore/CartContext';
 import { Cart } from '../ShopStore/Cart';
 import { ProductDetails } from '../../components/ShopStore/productDetails';
+import AboutUs from '../Screens/AboutUs/AboutUs'
 const Stack = createNativeStackNavigator();
 const Navigator = () => {
   return (
@@ -20,6 +21,8 @@ const Navigator = () => {
         <Stack.Screen name="SlideItem" component={SlideItem} />
         <Stack.Screen name="HomePage"  component={HomePage} />
         <Stack.Screen name="CartProvider"  component={CartProvider} />
+
+        <Stack.Screen name="aboutUs"  component={AboutUs} />
         <Stack.Screen name="Cart"  component={Cart} />
         <Stack.Screen name="productDetails"  component={ProductDetails} />
         <Stack.Screen name="AuthScreen" component={AuthScreen} />
