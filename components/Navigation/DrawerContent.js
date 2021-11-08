@@ -7,6 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { AuthContext } from '../../components/context';
+
 const DrawerContent=({navigation , props})=>{
 return (
 <View style={{flex:1}}>
@@ -41,7 +43,7 @@ return (
                               <Icon name="face-outline" size={size} color={color}/>
                             )}
                             label="Profile"
-                            onPress={() => {navigation.navigate("LogIn")}}
+                            onPress={() => {navigation.navigate("Profile")}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (

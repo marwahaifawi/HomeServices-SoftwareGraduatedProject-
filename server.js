@@ -13,7 +13,7 @@ var con = mysql.createConnection({
   password: "",
   database: "application",
 });
-const hostname = "192.168.1.108";
+const hostname = "192.168.1.104";
 const port = "1321";
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
@@ -80,6 +80,7 @@ app.post("/signup", function (req, res) {
                       success: true,
                       message: "Welcome to Application",
                     });
+
                   });
                 }
             );
@@ -102,14 +103,17 @@ app.get("/getservices", function (req, res) {
 });
 //----------------------------------------------------Login
 app.post("/login", function (req, res) {
-  var email = req.body.email; //value from textfield
-  var password = req.body.password; //value from textfield
+  var email = req.body.email.value; //value from textfield
+  var password = req.body.password.value; //value from textfield
+
+  console.log(email);
   if (email && password) {
     // if user fill all text input
     con.query(
       "SELECT * FROM users where email=?", //update
       [email],
       function (error, row) {
+        console.log(row[0].password);
         if (row.length < 1) {
           res.send({
             success: false,
@@ -117,6 +121,7 @@ app.post("/login", function (req, res) {
           });
         } 
         else if (bcrypt.compareSync(password, row[0].password)) {
+          console.log('hi')
             res.send({
               success: true,
               name: row[0].name,

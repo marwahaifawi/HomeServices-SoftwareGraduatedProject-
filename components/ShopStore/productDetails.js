@@ -11,8 +11,7 @@ import {
   } from 'react-native';
   import { Fontisto } from '@expo/vector-icons';
 
-export function ProductDetails({navigation}) {
-
+export default function ProductDetails({navigation}) {
   return (
     <SafeAreaView>
       <ScrollView>
@@ -27,7 +26,7 @@ export function ProductDetails({navigation}) {
           <Text style={styles.description}>descriptionjhsdkfharutgariugsaljfdblshdgvljkjdflksjaytjhgjhgiaegfadjf;af
           zdshfhz</Text>
           <View style={styles.ButtonContainer}>
-             <TouchableOpacity>
+             <TouchableOpacity OnPress={()=> navigation.navigate('Carts')}>
             <View style={styles.addToCartButton}>
             <Fontisto name="shopping-basket-add" size={20} color={theme.colors.surface} />
 

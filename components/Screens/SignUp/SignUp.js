@@ -66,7 +66,7 @@ const updateConfirmSecureTextEntry = () => {
     });
 }
   const onSignUpPressed = () => {
-        fetch("http://192.168.1.110:1321/signup", {
+        fetch("http://192.168.1.104:1321/signup", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -81,21 +81,16 @@ const updateConfirmSecureTextEntry = () => {
         })
           .then((response) => response.json())
           .then((res) => {
-            if (res.success === true) {
-              navigation.reset({
-                //Using reset avoid you to go back to login Screen
-                index: 0,
-                routes: [
-                  {
-                    name: "HomePage",
-                    params: {
-                      name: res.name,
-                      email:res.email
-                    },
-                  },
-                ],
-              });
-            }
+              if (res.success === true) {
+                navigation.navigate({
+                      name: "Profile",
+                      params: 
+                      {
+                        name:  res.name,
+                        email: res.email
+                      },
+                });
+              }
             else {
               alert(res.message);
               console.log(res);
@@ -166,7 +161,7 @@ const updateConfirmSecureTextEntry = () => {
            </View>
         
         <View style={styles.button}>           
-            <TouchableOpacity onPress={onSignUpPressed} >
+            <TouchableOpacity onPress={()=>onSignUpPressed()} >
           <Text style={{color: theme.colors.surface, fontSize:20 , fontWeight: 'bold' , fontFamily:'FontTwo' }}>
             Sign Up
           </Text>
@@ -192,6 +187,7 @@ const updateConfirmSecureTextEntry = () => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: 50,
+      backgroundColor:'white'
 
     },
     textInput: {

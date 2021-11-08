@@ -4,17 +4,14 @@ import SmallCards from "../Cards/SmallCards";
 import Title from '../Texts/Title';
 import { theme } from "../../core/theme";
 import { FontAwesome } from '@expo/vector-icons';
-const ProductsList = ({ title, data , fontFamily , OnPress , navigation }) => {
+const ProductsList = ({ title, data , fontFamily , OnPress , OnPress2}) => {
   return (
     <>
     <View style={{flexDirection:'row' , justifyContent: 'space-between' , paddingRight: 20}}> 
       <Title  fontFamily={fontFamily} size={30}>{title}</Title>
-      <TouchableOpacity onPress={() => {
-          navigation.navigate('Cart');
-        }}> 
+      <TouchableOpacity onPress={OnPress2}> 
         <FontAwesome name="shopping-cart" size={25} color= 'grey' />
       </TouchableOpacity>
-     
       </View>
      
       <View style={style.container}>

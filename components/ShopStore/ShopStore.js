@@ -12,7 +12,7 @@ export default function ShopStore({ navigation }) {
       </View>
       <View style={styles.body}>
         <ScrollView>
-          <ProductsView OnPress={() => navigation.navigate('productDetails')}data={Products} />
+          <ProductsView OnPress2={() => navigation.navigate('Carts')} OnPress={() => navigation.navigate('productDetails')}data={Products} />
         </ScrollView>
       </View>
 

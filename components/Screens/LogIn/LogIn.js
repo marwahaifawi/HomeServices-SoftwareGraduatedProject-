@@ -5,51 +5,45 @@ import Logo from '../Logo';
 import { theme } from '../../../core/theme.js';
 import Title from '../../Texts/Title.js';
 import Background from '../Background';
-//import { AuthContext } from '../../context.js';
-
-export const AuthContext = React.createContext();
-
+import { AuthContext } from '../../context.js';
 export default function LogIn({ navigation }) {
-  const [email, setEmail] = useState({ value: ''})
-  const [password, setPassword] = useState({ value: ''})
+
+  const [email, setEmail]       = useState({value:""})
+  const [password, setPassword] = useState({value:""})
 
   const onLoginPressed = () => {
-    fetch("http://192.168.1.108:4008/login", {
+    fetch("http://192.168.1.104:1321/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
+     body: JSON.stringify({ 
+        email: email,
+        password: password,
       }),
     })
       .then((response) => response.json())
       .then((res) => {
         if (res.success === true) {
-          navigation.reset({
-            index: 0,
-            routes: [
-              {
-                name: "HomePage",
-                params: {
-                  name: res.name,
-                email: res.email
+          navigation.navigate({
+                name: "Profile",
+                params: 
+                {
+                  name:  res.name,
+                  email: res.email
                 },
-              },
-            ],
           });
-        navigation.navigate("HomePage", {
-            name: res.name,
-      email:res.email
-          });
-        } else {
+        }
+        else {
           alert(res.message);
+          console.log(res);
+          console.log("err")
         }
       })
       .done();
   };
+  const {signIn}= React.useContext(AuthContext);
   return (
     <>
        <Background>
@@ -83,7 +77,7 @@ export default function LogIn({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={Styles.button}>
-        <TouchableOpacity onPress={()=> onLoginPressed } >
+        <TouchableOpacity onPress={()=> signIn()} >
           <Text style={{color: theme.colors.surface, fontSize:20 , fontWeight: 'bold' , fontFamily:'FontTwo' }}>
             Login
           </Text>

@@ -11,5 +11,6 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     marginBottom: 8,
+    alignSelf:'center'
   },
 })

@@ -18,7 +18,7 @@ export default function Services({ navigation }) {
   //  setServices(Services);
   async function fetchData() {
     const response = await fetch(
-      "http://192.168.1.108:1321/getservices"
+      "http://192.168.1.104:1321/getservices"
     );
     const servicesData = await response.json();
     setServices(servicesData);
