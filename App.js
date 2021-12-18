@@ -11,7 +11,6 @@ export default class App extends React.Component {
   state = {
     fontsLoaded: false,
   };
-
   async _loadFontsAsync() {
     await Font.loadAsync(fonts);
     this.setState({ fontsLoaded: true });

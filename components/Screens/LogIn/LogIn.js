@@ -1,23 +1,47 @@
 import React, { useState , useEffect } from 'react';
-import { TouchableOpacity, View,Text , TextInput, Button, KeyboardAvoidingView  } from 'react-native';
+import { TouchableOpacity, View,Text , TextInput} from 'react-native';
 import Styles from './LogInStyles.js';
 import Logo from '../Logo';
 import { theme } from '../../../core/theme.js';
-import Title from '../../Texts/Title.js';
 import Background from '../Background';
 import { AuthContext } from '../../context.js';
-export default function LogIn({ navigation }) {
+import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
+import Feather from 'react-native-vector-icons/Feather';
+export default function LogIn() {
+  const navigation = useNavigation();
+  const {signIn}= React.useContext(AuthContext);
 
-  const [email, setEmail]       = useState({value:""})
-  const [password, setPassword] = useState({value:""})
-
+  const [data, setData] = React.useState({
+    username: '',
+    password: '',
+    confirmpassword: '',
+    check_textInputChange: false,
+    secureTextEntry: true,
+    confirm_secureTextEntry: true,
+});
+  const [email, setEmail]       = useState("");
+  const [name,setName]          = useState("");
+  const [password, setPassword] = useState("");
+  const handlePasswordChange = (val) => {
+    setData({
+        ...data,
+        password: val
+    });
+}
+const updateSecureTextEntry = () => {
+    setData({
+        ...data,
+        secureTextEntry: !data.secureTextEntry
+    });
+}
   const onLoginPressed = () => {
-    fetch("http://192.168.1.104:1321/login", {
+    fetch("http://192.168.1.109:1321/login", {
       method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type':'application/json'
+    },
      body: JSON.stringify({ 
         email: email,
         password: password,
@@ -26,49 +50,72 @@ export default function LogIn({ navigation }) {
       .then((response) => response.json())
       .then((res) => {
         if (res.success === true) {
-          navigation.navigate({
-                name: "Profile",
-                params: 
-                {
-                  name:  res.name,
-                  email: res.email
-                },
-          });
+          setName(res.name);
+         navigation.navigate("Profile",{ email:res.email , name:res.name});
+          signIn(email,password , res.name);
         }
         else {
           alert(res.message);
           console.log(res);
           console.log("err")
-        }
+        }       
+         console.log(res.name);
+
       })
       .done();
   };
-  const {signIn}= React.useContext(AuthContext);
   return (
     <>
        <Background>
        <View style={Styles.container}>
       <Logo />
-      <Title color={{ color: theme.colors.primary }} size={{ fontSize: 20 }} fontFamily={{ fontFamily: 'FontThree' }}>Login</Title>
-      <TextInput
-        style={Styles.textInput}
+      <View  style={Styles.textInput1}>
+        <TextInput
+      style={Styles.textInput}
         label="Email"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text })}
+        value={email}
+        onChangeText={(text) => setEmail(text)}
         autoCapitalize="none"
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
-        placeholder="Email" />
-      <TextInput
+        placeholder="Email" 
+    
+        />
+                  <MaterialIcons name="email" size={24} color="gray" />
+
+        </View>
+      <View   style={Styles.textInput1}> 
+        <TextInput
         style={Styles.textInput}
         label="Password"
         returnKeyType="done"
-        value={password.value}
-        onChangeText={(text) => setPassword({ value: text})}
+        value={password}
+        onChangeText={(text) => {setPassword(text) , handlePasswordChange(text)}}
         placeholder="Password"
-        secureTextEntry />
+        secureTextEntry={data.secureTextEntry ? true : false}
+
+        />
+                 <TouchableOpacity
+                    onPress={updateSecureTextEntry}
+                >
+                    {data.secureTextEntry ? 
+                    <Feather 
+                        name="eye-off"
+                        color="grey"
+                        size={20}
+                    />
+                    :
+                    <Feather 
+                        name="eye"
+                        color="grey"
+                        size={20}
+                    />
+                    }
+                </TouchableOpacity>
+        </View>
+     
       <View style={Styles.forgotPassword}>
         <TouchableOpacity
           onPress={() => navigation.navigate('ResetPasswordScreen')}
@@ -77,7 +124,8 @@ export default function LogIn({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={Styles.button}>
-        <TouchableOpacity onPress={()=> signIn()} >
+        
+        <TouchableOpacity onPress={()=>onLoginPressed()} >
           <Text style={{color: theme.colors.surface, fontSize:20 , fontWeight: 'bold' , fontFamily:'FontTwo' }}>
             Login
           </Text>
@@ -85,7 +133,7 @@ export default function LogIn({ navigation }) {
           
           </View>
       <View style={Styles.row}>
-        <Text style={{ color: theme.colors.primary, fontFamily: 'FontThree', fontSize:14 , marginTop:5 }}>Don’t have an account?</Text>
+        <Text style={{ color: theme.colors.primary, fontFamily: 'FontThree', fontSize:13 }}>Don’t have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={Styles.link}> Sign up</Text>
         </TouchableOpacity>

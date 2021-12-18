@@ -2,11 +2,12 @@ import React from "react";
 import VerticalList from "../lists/VerticalList";
 import * as Animatable from 'react-native-animatable';
 
-const ServicesView = ({ data , OnPress}) => {
+const ServicesView = ({ data , OnPress , email}) => {
     return <VerticalList 
     OnPress={OnPress}  
     fontFamily={{fontFamily:'FontThree'}} 
-    title="All Services" 
+    title="Our Services" 
+    email={email}
     data={data} />;
 };
 

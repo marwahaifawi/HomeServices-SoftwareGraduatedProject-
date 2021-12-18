@@ -1,39 +1,36 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { View,StyleSheet,ScrollView } from "react-native";
 import SmallCards from "../Cards/SmallCards";
 import Title from '../Texts/Title';
-import { theme } from "../../core/theme";
-import { FontAwesome } from '@expo/vector-icons';
-const ProductsList = ({ title, data , fontFamily , OnPress , OnPress2}) => {
+import { useNavigation } from '@react-navigation/native';
+
+export default function ProductsList({ title, data, fontFamily, email}) {
+  const navigation = useNavigation();
+
   return (
     <>
-    <View style={{flexDirection:'row' , justifyContent: 'space-between' , paddingRight: 20}}> 
-      <Title  fontFamily={fontFamily} size={30}>{title}</Title>
-      <TouchableOpacity onPress={OnPress2}> 
-        <FontAwesome name="shopping-cart" size={25} color= 'grey' />
-      </TouchableOpacity>
+      <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', paddingRight: 20, height: 40 }}>
+        <Title fontFamily={fontFamily} size={30}>{title}</Title>
       </View>
-     
-      <View style={style.container}>
-         {data.map(item =>
-          <SmallCards 
-          OnPress={OnPress} 
-          item={item} 
-          key={String(item.id)}
-          /> )}        
-         </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={style.container}>
+          {data.map(item =>
+            <SmallCards
+              email={email}
+              OnPress={() => navigation.navigate('productDetails', item)}
+              item={item}
+              key={String(item.id)}
+            />)}
+        </View>
+      </ScrollView>
     </>
-    
   );
-
 };
 
 const style = StyleSheet.create({
- container:{
-   flexDirection:'row',
-   flexWrap:'wrap',
-   justifyContent:'space-between'
- }
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  }
 });
-
-export default ProductsList;

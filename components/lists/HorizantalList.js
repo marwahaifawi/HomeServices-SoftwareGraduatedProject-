@@ -9,10 +9,10 @@ const HorizantalList = ({ title, data , fontFamily }) => {
     <>
       <Title  fontFamily={fontFamily} size={20}>{title}</Title>
       <FlatList
+      showsHorizontalScrollIndicator={false}
         data={data}
         keyExtractor={(item) => String(item.id)}
         horizontal 
-        showsHorizontalScrollIndicator="false"
         renderItem={({ item }) => <VerticalCards item={item} />}
       />
     </>

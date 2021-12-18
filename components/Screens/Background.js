@@ -1,28 +1,29 @@
-import React from 'react'
-import { ImageBackground, StyleSheet, KeyboardAvoidingView } from 'react-native'
-import { theme } from '../../core/theme'
+import React from 'react';
+import { ImageBackground, StyleSheet, KeyboardAvoidingView , ScrollView} from 'react-native';
 
 export default function Background({ children}) {
   return (
+    <ImageBackground style={styles.background} source={require('../../assets/background.png')}> 
+            <ScrollView showsVerticalScrollIndicator={false}>
+
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         {children}
       </KeyboardAvoidingView>
+           </ScrollView>
+    </ImageBackground>
+
+
   )
 }
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: '100%',
-    backgroundColor: 'white',
-    height:'100%'
+    resizeMode:'cover'
 
   },
   container: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: 'white',
-
-    height:'100%'
+justifyContent:'center',
+alignContent:'center',
   },
 })

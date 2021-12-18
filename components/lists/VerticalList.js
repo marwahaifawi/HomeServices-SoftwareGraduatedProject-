@@ -1,25 +1,38 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View,  StyleSheet, ScrollView } from "react-native";
 import VerticalCards from "../Cards/VerticalCards";
 import Title from '../Texts/Title';
-import * as Animatable from 'react-native-animatable';
+import { useNavigation } from '@react-navigation/native';
+import { ImageSlider } from "react-native-image-slider-banner";
 
-const VerticalList = ({ title, data , fontFamily , OnPress }) => {
+const VerticalList = ({ title, data , fontFamily , OnPress , email}) => {
+  const navigation = useNavigation();
   return (
     <>
-      <Title  fontFamily={fontFamily} size={20}>{title}</Title>
+    <View style={{height:40 ,justifyContent:'center'}}>
+       <Title  fontFamily={fontFamily} size={20}>{title}</Title>
+    </View>  
+      <ScrollView showsVerticalScrollIndicator={false}>
+      <ImageSlider 
+    data={[
+        {img: 'https://cdn.pixabay.com/photo/2017/09/16/14/33/electrician-2755682_960_720.jpg'},
+        {img: 'https://cdn.pixabay.com/photo/2013/12/13/21/13/plumber-228010_960_720.jpg'},
+        {img: 'https://cdn.pixabay.com/photo/2015/12/07/10/59/building-1080594_960_720.jpg'}
+    ]}
+    autoPlay={true}
+    closeIconColor="#fff"
+/>
       <View style={style.container}>
          {data.map(item =>
           <VerticalCards 
-          OnPress={OnPress} 
+          OnPress={() => navigation.navigate('AskAddSerInf', {item:item , email:email})}
           item={item} 
           key={String(item.id)}
           /> )}        
          </View>
+         </ScrollView>
     </>
-    
   );
-
 };
 
 const style = StyleSheet.create({

@@ -2,6 +2,15 @@ var express = require("express");
 const cors = require("cors");
 var app = express();
 var mysql = require("mysql");
+var nodemailer = require("nodemailer");
+
+var transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: "home.services.10102@gmail.com",
+    pass: "123456789*+",
+  },
+});
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" , extended:'true' }));
 app.use(cors());
@@ -13,7 +22,7 @@ var con = mysql.createConnection({
   password: "",
   database: "application",
 });
-const hostname = "192.168.1.104";
+const hostname = "192.168.1.109";
 const port = "1321";
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
@@ -23,43 +32,28 @@ con.connect(function (error) {
   if (error) console.log(error);
   else console.log("connected");
 });
-app.get("/users", function (req, res) {
-  // Connecting to the database.
-  // Executing the MySQL query (select all data from the 'users' table).
-  con.query(
-    "SELECT * FROM users",
-    function (error, results, fields) {
-      // If some error occurs, we throw an error.
-      if (error) throw error;
-      // Getting the 'response' from the database and sending it to our route. This is were the data is.
-
-      res.send(results);
-      console.log(results);
-    }
-  );
-});
-
 //----------------------------------------------------SignUp
 app.post("/signup", function (req, res) {
-  var userName = req.body.userName.value;
-  var emailAdd = req.body.emailAdd.value;
-  var passwordFirst = req.body.passwordFirst.value;
+  var name = req.body.name;
+  var email = req.body.email;
+  var password = req.body.password;
+  console.log(email,password,name);
   if (
-    emailAdd &&
-    userName &&
-    passwordFirst
+    email &&
+    name &&
+    password
   )  {
-    bcrypt.hash(passwordFirst, 10, function (error, hash) {
+    bcrypt.hash(password, 10, function (error, hash) {
       con.query(
         "SELECT * FROM users where email=?",
-        [emailAdd],
+        [email],
         function (error, row) {
           if (row.length > 0) {
             res.send({ message: "This email already exists" });
           } else {
             con.query(
               "SELECT * FROM users where name=?",
-              [userName],
+              [name],
               function (error, row) {
                 if (row.length > 0) {
                   res.send({ message: "This username already exists" });
@@ -68,9 +62,9 @@ app.post("/signup", function (req, res) {
                     "INSERT INTO users (name,password,email) VALUES ?";
                   var values = [
                     [
-                      userName,
+                      name,
                       hash,
-                      emailAdd,
+                      email,
                     ],
                   ];
                 }
@@ -80,7 +74,6 @@ app.post("/signup", function (req, res) {
                       success: true,
                       message: "Welcome to Application",
                     });
-
                   });
                 }
             );
@@ -101,11 +94,17 @@ app.get("/getservices", function (req, res) {
     res.send(results);
   });
 });
+//------------------------------------------------------get products
+app.get("/getproducts", function (req, res) {
+  con.query("SELECT * FROM products", function (error, results, fields) {
+    if (error) throw error;
+    res.send(results);
+  });
+});
 //----------------------------------------------------Login
 app.post("/login", function (req, res) {
-  var email = req.body.email.value; //value from textfield
-  var password = req.body.password.value; //value from textfield
-
+  var email = req.body.email; //value from textfield
+  var password = req.body.password; //value from textfield
   console.log(email);
   if (email && password) {
     // if user fill all text input
@@ -121,12 +120,13 @@ app.post("/login", function (req, res) {
           });
         } 
         else if (bcrypt.compareSync(password, row[0].password)) {
-          console.log('hi')
             res.send({
               success: true,
               name: row[0].name,
-              email:row[0].email
+              email:row[0].email,
+              password:row[0].password
             });
+            console.log(res.name)
           }
         else {
           res.send({
@@ -140,4 +140,257 @@ app.post("/login", function (req, res) {
     res.send({ message: "Please enter Username and Password!" });
     res.end();
   }
+});
+//------------------------------------------resert password
+app.post("/resetpass", function (req, res) {
+  const email = req.body.email;
+  const code = req.body.code;
+  let mailOptions = {
+    from: "Home Services",
+    to: email,
+    subject: "Reset Password ",
+    text:
+      "You are receiving this because you (or someone else) have requested the reset of the password for your account in HomeServices application.\n\n" +
+      "Please use this code to reset your password \n\n" +
+      "If you did not request this, please ignore this email and your password will remain unchanged.\n\n" +
+      "Code:" +
+      code,
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.send({message: error+" "});
+    } 
+    else {
+      var sql = "INSERT INTO resetpass (email,code) VALUES ?";
+      var values = [[email, code]];
+      con.query(sql, [values], function (error, row) {
+        if (error) throw error;
+        res.send({
+          success: true,
+          message: "Thank you. We will answer your request as soon as possible",
+        });
+      });
+    }
+  });
+});
+//----------------------------------------------------------check email FOR resetPass in Passreset screen
+app.post("/checkemailFORresetPass", function (req, res) {
+  var email = req.body.email; //value from textfield
+
+  // if user fill all text input
+  con.query(
+    "SELECT * FROM users where email=?", //update
+    [email],
+    function (error, row) {
+      if (row.length < 1) {
+        res.send({
+          success: false,
+          message: "Incorrect Email",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "yes",
+        });
+      }
+    }
+  );
+});
+//--------------------------------------- reset pass verify
+
+app.post("/resetpassverify", function (req, res) {
+  var email = req.body.email; //value from textfield
+  var codeuser = req.body.codeuser;
+  // if user fill all text input
+  con.query(
+    "SELECT * FROM resetpass where email=?", //update
+    [email],
+    function (error, row) {
+      if (row[0].code == codeuser) {
+        res.send({
+          success: true,
+          message: "yes",
+        });
+      } else {
+        res.send({
+          success: false,
+          message: "Incorrect Code",
+        });
+      }
+    }
+  );
+});
+//--------------------------------------------------------reset pass delete
+app.delete("/resetpassdelete", function (req, res) {
+  con.query(
+    "DELETE  FROM resetpass where email=? ",
+    [req.body.email],
+    function (error, results, fields) {
+      if (error) throw error;
+      else
+        res.send({
+          success: true,
+          message: "Deleted Successfuly",
+        });
+    }
+  );
+});
+//---------------------------------------------------------update resetpass
+
+app.put("/updateresetpass", function (req, res) {
+  var email = req.body.email;
+  var passwordsign = req.body.password;
+
+  bcrypt.hash(passwordsign, 10, function (error, hash) {
+    var sql = "UPDATE users set password=? where email=?";
+    con.query(sql, [hash, email], function (error, row) {
+      if (error) throw error;
+      else
+        res.send({
+          success: true,
+          message: "Updated Successfuly now you can go and login again",
+        });
+    });
+  });
+});
+
+//------------------------------------------virefy pass in profile screen------------------------------------
+app.post("/verify", function (req, res) {
+  var name = req.body.name; //value from textfield
+  var password = req.body.password; //value from textfield
+
+  // if user fill all text input
+  con.query(
+    "SELECT * FROM users where name=? ", //update
+    [user],
+    function (error, row) {
+      if (bcrypt.compareSync(password, row[0].password)) {
+        res.send({
+          success: true,
+        });
+      } else {
+        res.send({
+          success: false,
+          message: "Wrong password.Try again",
+        });
+      }
+    }
+  );
+});
+//-------------------------------------------------save changed pass in profile screen
+app.put("/savepass", function (req, res) {
+  var name = req.body.name;
+  var passwordsign = req.body.password;
+
+  bcrypt.hash(passwordsign, 10, function (error, hash) {
+    var sql = "UPDATE users set password=? where name=?";
+    con.query(sql, [hash, name], function (error, row) {
+      if (error) throw error;
+      else
+        res.send({
+          success: true,
+          message: "Updated Successfuly",
+        });
+    });
+  });
+});
+//---------------------------------------favourite in fav screen
+app.get("/Fav", function (req, res) {
+  con.query(
+    "SELECT * FROM favourite where email=?",
+    [req.query.email],
+    function (error, results, fields) {
+      if (error) throw error;
+      res.send(results);
+    }
+  );
+});
+//------------------------------------ Add to favourites
+app.post("/favouritesAdd", function (req, res) {
+  var email = req.body.email;
+  var id = req.body.id;
+  var name= req.body.name;
+  var price= req.body.price;
+  var image= req.body.image;
+  var liked= req.body.liked;
+  var sql = "INSERT INTO favourite (email,id , price , name , image , liked) VALUES ?";
+  var values = [[email, id , price , name , image , liked]];
+  con.query(sql, [values], function (error, row) {
+    if (error) throw error;
+    res.send({
+      success: true,
+      message: "Added successfully to favourites",
+      data: row,
+    });
+  });
+});
+//----------------------------------------------delete from fav in fav screen
+app.delete("/deleteFav", function (req, res) {
+  con.query(
+    "DELETE  FROM favourite where id=? ",
+    [req.body.id],
+    function (error, results, fields) {
+      if (error) throw error;
+      else
+        res.send({
+          success: true,
+          message: "Deleted Successfuly",
+        });
+    }
+  );
+});
+//----------------------------------------------- get favorite products
+app.get("/getFavproducts", function (req, res) {
+  con.query(
+    "SELECT * FROM products where id=?",
+    [req.query.id],
+    function (error, results, fields) {
+      if (error) throw error;
+      res.send(results);
+    }
+  );
+});
+//------------------------------------ Add to Cart
+app.post("/shoppinglistAdd", function (req, res) {
+  var email = req.body.email;
+  var id = req.body.id;
+  var name= req.body.name;
+  var price= req.body.price;
+  var image= req.body.image;
+  var sql = "INSERT INTO shoppinglist (email,id , price , name , image ) VALUES ?";
+  var values = [[email, id , price , name , image ]];
+  con.query(sql, [values], function (error, row) {
+    if (error) throw error;
+    res.send({
+      success: true,
+      message: "Added successfully to Shoppings",
+      data: row,
+    });
+  });
+});
+//----------------------------------------------shopping list in shopping screen
+app.get("/shoppinglistScreen", function (req, res) {
+  con.query(
+    "SELECT * FROM shoppinglist where email=?",
+    [req.query.email],
+    function (error, results, fields) {
+      if (error) throw error;
+      res.send(results);
+    }
+  );
+});
+//----------------------------------------------delete from shopping list in shopping screen
+app.delete("/deleteshoppinglist", function (req, res) {
+  con.query(
+    "DELETE  FROM shoppinglist where email=? AND id=?",
+    [req.body.email],[req.body.id],
+    function (error, results, fields) {
+      if (error) throw error;
+      else
+        res.send({
+          success: true,
+          message: "Deleted From Shoppinglist",
+        });
+    }
+  );
 });

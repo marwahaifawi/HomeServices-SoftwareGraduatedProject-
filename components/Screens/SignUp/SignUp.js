@@ -2,234 +2,374 @@ import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Button } from "react-native";
 import Logo from "../Logo";
 import TextInput from "../../Texts/TextInput";
+import Background from '../Background';
 import { theme } from "../../../core/theme";
-import Title from "../../Texts/Title";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { AuthContext } from '../../context.js';
+import { Foundation } from '@expo/vector-icons';
 import Feather from 'react-native-vector-icons/Feather';
-import * as Animatable from 'react-native-animatable';
+import * as Animated from 'react-native-animatable';
 
 export default function SignUp({ navigation }) {
-  const [userName, setName] = useState({ value:""});
-  const [emailAdd, setEmail] = useState({ value: ""});
-  const [passwordFirst, setPassword] = useState({ value: ""});
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const {signUp}= React.useContext(AuthContext);
+  const [passwordconfirm, setconfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [data, setData] = React.useState({
-    username: '',
+    name: '',
     password: '',
-    confirm_password: '',
-    check_textInputChange: false,
-    secureTextEntry: true,
-    confirm_secureTextEntry: true,
-});
-
-const textInputChange = (val) => {
-    if( val.length !== 0 ) {
-        setData({
-            ...data,
-            username: val,
-            check_textInputChange: true
-        });
-    } else {
-        setData({
-            ...data,
-            username: val,
-            check_textInputChange: false
-        });
-    }
-}
-
-const handlePasswordChange = (val) => {
-    setData({
-        ...data,
-        password: val
-    });
-}
-
-const handleConfirmPasswordChange = (val) => {
-    setData({
-        ...data,
-        confirm_password: val
-    });
-}
-
-const updateSecureTextEntry = () => {
-    setData({
-        ...data,
-        secureTextEntry: !data.secureTextEntry
-    });
-}
-
-const updateConfirmSecureTextEntry = () => {
-    setData({
-        ...data,
-        confirm_secureTextEntry: !data.confirm_secureTextEntry
-    });
-}
-  const onSignUpPressed = () => {
-        fetch("http://192.168.1.104:1321/signup", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-         body: JSON.stringify({ 
-            emailAdd: emailAdd,
-            passwordFirst: passwordFirst,
-            userName: userName,
-
-          }),
-        })
-          .then((response) => response.json())
-          .then((res) => {
-              if (res.success === true) {
-                navigation.navigate({
-                      name: "Profile",
-                      params: 
-                      {
-                        name:  res.name,
-                        email: res.email
-                      },
-                });
-              }
-            else {
-              alert(res.message);
-              console.log(res);
-              console.log("err")
-            }
-          })
-          .done();
-      };
-    return (
-      <>
-        <View style={styles.container}>
-
-        <Logo />
-        <Title color={{ color: theme.colors.primary }} size={{ fontSize: 20 }} fontFamily={{ fontFamily: 'FontThree' }}>Create New Account</Title>
-        <View style={styles.textInputBorder}> 
-        <MaterialIcons name="drive-file-rename-outline" size={24} color="gray" />
-        <TextInput
-          style={styles.textInput}
-          label="Name"
-          returnKeyType="next"
-          value={userName.value}
-          onChangeText={(text) => setName({ value: text})}
-          placeholder="Name" />
-          </View>
-          <View style={styles.textInputBorder}> 
-          <MaterialIcons name="email" size={24} color="gray" />
-        <TextInput
-          style={styles.textInput}
-          label="Email"
-          returnKeyType="next"
-          value={emailAdd.value}
-          onChangeText={(text) =>{ setEmail({ value: text}), textInputChange(text) }}
-          autoCapitalize="none"
-          autoCompleteType="email"
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          placeholder="Email Address" />
-         
-          
-          </View>
-         <View    style={styles.textInputBorder}>
-         <TouchableOpacity
-                    onPress={updateSecureTextEntry}
-                >
-                    {data.secureTextEntry ? 
-                    <Feather 
-                        name="eye-off"
-                        color="grey"
-                        size={20}
-                    />
-                    :
-                    <Feather 
-                        name="eye"
-                        color="grey"
-                        size={20}
-                    />
-                    }
-                </TouchableOpacity>
-           <TextInput
-          style={styles.textInput}
-          label="Password"
-          returnKeyType="done"
-          value={passwordFirst.value}
-          onChangeText={(text) => {setPassword({ value: text}) , handlePasswordChange(text)}}
-          placeholder="Password"
-          secureTextEntry={data.secureTextEntry ? true : false}
-           />
-           </View>
-        
-        <View style={styles.button}>           
-            <TouchableOpacity onPress={()=>onSignUpPressed()} >
-          <Text style={{color: theme.colors.surface, fontSize:20 , fontWeight: 'bold' , fontFamily:'FontTwo' }}>
-            Sign Up
-          </Text>
-        </TouchableOpacity>
-            </View>
-
-        <View style={styles.row}>
-          <Text style={{ fontSize:15, color: theme.colors.primary, fontFamily: 'FontThree' }}>
-            Already have an account?{" "}
-          </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("LogIn")}>
-            <Text style={styles.link}>Login</Text>
-          </TouchableOpacity>
-        </View></View></>
-
-
-    );
-  }
-
-  const styles = StyleSheet.create({
-
-    container: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 50,
-      backgroundColor:'white'
-
-    },
-    textInput: {
-      width: '100%',
-      fontSize: 17,
-      fontFamily: 'FontTwo',
-      paddingLeft:10, 
-
-    },
-    textInputBorder: {
-      height: 50,
-      width: '100%',
-      flexDirection:'row',
-      paddingLeft: 10,
-      alignItems:'center',
-      borderRadius: 50,
-      borderWidth: 1,
-      borderColor: theme.colors.primary,
-      margin:10
-
-    },
-    button: {
-      backgroundColor:theme.colors.primary,
-      fontFamily:'FontThree', 
-      fontSize:20,
-      width:100,
-      borderRadius:50, 
-      marginTop:10,
-     width:100,
-     height:40,
-     justifyContent: 'center',
-     alignItems: 'center'
-
-    },
-    row: {
-      flexDirection: 'row',
-      marginTop: 20
-    },
-    link: {
-      fontWeight: "bold",
-      color: theme.colors.primary,
-      fontFamily: 'FontTwo',
-      fontSize:18
-    },
+    pass1: '',
+    confirmpassword: '',
+    isValidemail:true,
+    secureTextEntry:true,
+    secureTextEntry1:true,
+    isValidPass:true,
+    isValidUser:true,
+    matching:true
   });
+
+  //-----------------------------------------------------------------For email formate
+  const validate = (val) => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(val) === false) {
+      console.log("Email is Not Correct");
+      setData({
+        ...data,
+        isValidemail: false,
+      });
+      
+    } else {
+    setData({
+      ...data,
+        isValidemail: true,
+      });
+      console.log("Email is Correct");
+    }
+  };
+  //----------------------------------------------------------------------------------
+  const handleValidUser = (val) => {
+    if (val.trim().length >= 4) {
+      setData({ 
+        ...data,
+        isValidUser: true 
+      });
+    } else {
+      setData({ 
+        ...data,
+        isValidUser: false
+       });
+    }
+  };
+  //------------------------------------------------------------------------------
+  const handlePasswordChange = (val) => {
+    if (val.trim().length >= 8) {
+      setData({
+        ...data,
+        isValidPass: true,
+      });
+    } else {
+     setData({
+        ...data,
+        isValidPass: false,
+      });
+    }
+  };
+  //--------------------------------------------------------
+  const savepass1 = (val) => {
+    setData({
+      ...data,
+      pass1: val });
+  };
+  //--------------------------------------------------
+  const match = (val) => {
+    if (passwordconfirm == data.pass1) { 
+      setData({ 
+      ...data,
+      matching: true
+     });}
+   
+    else
+    {  
+      setData({ 
+      ...data,
+      matching: false });
+    } 
+  
+  };
+//----------------------------------------------------------------------------------
+  const updateSecureTextEntry = () => {
+    setData({
+      ...data,
+      secureTextEntry: !data.secureTextEntry
+    });
+  }
+  //----------------------------------------------------------------------------------
+  const updateSecureTextEntry1 = () => {
+    setData({
+      ...data,
+      secureTextEntry1: !data.secureTextEntry1
+    });
+  }
+//---------------------------------------------------------------------------
+  const onSignUpPressed = () =>
+   {
+    fetch("http://192.168.1.109:1321/signup", {
+      method: "POST",
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type':'application/json'
+    },
+      body: JSON.stringify({
+        name: name,
+        email:    email,
+        password: password,
+
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.success === true)
+        {
+          setName(res.name);
+          navigation.navigate("Profile",{ name:name ,  email:email ,});
+          signUp(email,password ,name);
+        }
+        else {
+          alert(res.message);
+          console.log(res);
+          console.log("err")
+        }
+      })
+      .done();
+  };
+  return (
+    <>
+      <Background>
+        <View style={styles.container}>
+          <Logo />
+          <View style={styles.textInput1}>
+            <TextInput
+              style={styles.textInput}
+              label="name"
+              returnKeyType="next"
+              value={name}
+              onChangeText={(text) => {setName(text) ,  handleValidUser(text)}}
+              onEndEditing={(e) => handleValidUser(e.nativeEvent.text)  }
+              placeholder="Name" />
+               <MaterialIcons name="drive-file-rename-outline" size={24} color="gray" />
+          </View>
+          {data.isValidUser ? null : (
+                    <Animated.View
+                      animation="fadeInLeft"
+                      duration={500}
+                      style={{ paddingLeft: 30 }}
+                    >
+                      <Text style={styles.errorMsg}>
+                        Username must be 4 or more characters long.
+                      </Text>
+                    </Animated.View>
+                  )}
+
+          <View style={styles.textInput1}>
+            <TextInput
+              style={styles.textInput}
+              label="Email"
+              returnKeyType="next"
+              value={email}
+              onChangeText={(text) => { setEmail( text), validate(text)  }}
+              onEndEditing={(e) => validate(e.nativeEvent.text)}
+              autoCapitalize="none"
+              autoCompleteType="email"
+              textContentType="emailAddress"
+              keyboardType="email-address"
+              placeholder="Email Address" />
+            <MaterialIcons name="email" size={24} color="gray" />
+          </View>
+          {data.isValidemail ? null : (
+                    <Animated.View
+                      animation="fadeInLeft"
+                      duration={500}
+                      style={{ paddingLeft: 30 }}
+                    >
+                      <Text style={styles.errorMsg}>Email is not correct</Text>
+                    </Animated.View>
+                  )}
+      
+          
+          <View style={styles.textInput1}>
+            <TextInput
+              style={styles.textInput}
+              label="Password"
+              returnKeyType="done"
+              value={password}
+              onChangeText={(text) => { setPassword(text), handlePasswordChange(text)}}
+              onEndEditing={(e) => savepass1(e.nativeEvent.text)}
+              placeholder="Password"
+              secureTextEntry={data.secureTextEntry1 ? true : false}
+            />
+            <TouchableOpacity
+              onPress={updateSecureTextEntry1}
+            >
+              {data.secureTextEntry1 ?
+                <Feather
+                  name="eye-off"
+                  color="grey"
+                  size={20}
+                />
+                :
+                <Feather
+                  name="eye"
+                  color="grey"
+                  size={20}
+                />
+              }
+            </TouchableOpacity>
+
+          </View>
+          {data.isValidPass ? null : (
+                    <Animated.View
+                      animation="fadeInLeft"
+                      duration={500}
+                      style={{ paddingLeft: 30 }}
+                    >
+                      <Text style={styles.errorMsg}>
+                        Password must be 8 or more characters long.
+                      </Text>
+                    </Animated.View>
+                  )}
+          <View style={styles.textInput1}>
+            <TextInput
+              style={styles.textInput}
+              label="ConfirmPassword"
+              returnKeyType="done"
+              value={passwordconfirm}
+              onChangeText={(text) => { setconfirmPassword(text)}}
+              placeholder="Confirm Password"
+              onEndEditing={(e) => match(e.nativeEvent.text)}
+
+              secureTextEntry={data.secureTextEntry ? true : false}
+            />
+             <TouchableOpacity
+              onPress={updateSecureTextEntry}
+            >
+              {data.secureTextEntry ?
+                <Feather
+                  name="eye-off"
+                  color="grey"
+                  size={20}
+                />
+                :
+                <Feather
+                  name="eye"
+                  color="grey"
+                  size={20}
+                />
+              }
+            </TouchableOpacity>
+          </View>
+          {data.matching ? null:  (
+                    <Animated.View
+                      animation="fadeInLeft"
+                      duration={500}
+                      style={{ paddingLeft: 30 }}
+                    >
+                      <Text style={styles.errorMsg}>
+                        Passwords are not match
+                      </Text>
+                    </Animated.View>
+                  )}
+
+          <View style={styles.button}>
+            <TouchableOpacity onPress={() => onSignUpPressed()} >
+              <Text style={{ color: theme.colors.surface, fontSize: 20, fontWeight: 'bold', fontFamily: 'FontTwo' }}>
+                Sign Up
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.row}>
+            <Text style={{ fontSize: 15, color: theme.colors.primary, fontFamily: 'FontThree' }}>
+              Already have an account?{" "}
+            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("LogIn")}>
+              <Text style={styles.link}>Login</Text>
+            </TouchableOpacity>
+          </View></View>
+      </Background>
+    </>
+
+
+  );
+}
+
+const styles = StyleSheet.create({
+
+  container: {
+    alignItems:'center', 
+    paddingLeft: 40,
+    paddingRight: 40,
+    backgroundColor:'white',
+    borderRadius:20,
+    width:"90%",
+    height:"97%",
+    alignSelf:'center',
+    opacity:0.9,
+    marginTop:40
+  },
+  textInput:{
+    fontSize: 17, 
+    fontFamily:'FontTwo', 
+    width:'80%',
+    height:'100%'
+  },
+  textInput1:{
+    height: 50,
+    width: '100%',
+    paddingLeft: 10,
+    paddingRight: 30,
+   alignItems: 'center',
+    flexDirection:'row',    
+    borderRadius:10, 
+borderBottomWidth:1,
+    borderBottomColor:theme.colors.primary,
+    margin:10
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    fontFamily: 'FontThree',
+    fontSize: 20,
+    width: 100,
+    borderRadius: 50,
+    marginTop: 10,
+    width: 100,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+
+  },
+  row: {
+    flexDirection: 'row',
+    marginTop: 20
+  },
+  link: {
+    fontWeight: "bold",
+    color: theme.colors.primary,
+    fontFamily: 'FontTwo',
+    fontSize: 18
+  },
+  errorMsg: {
+    color: "#FF0000",
+    fontSize: 14,
+  },
+});
+/*<View style={styles.textInput1}>
+            <TextInput
+              style={styles.textInput}
+              label="Phone"
+              returnKeyType="next"
+              value={phone}
+              onChangeText={(text) => setPhone(text)}
+              placeholder="Phone Number" />
+         <Foundation name="telephone" size={24} color="gray" />
+          </View>*/

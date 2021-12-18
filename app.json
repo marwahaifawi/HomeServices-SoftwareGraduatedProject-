@@ -18,7 +18,6 @@
     ],
     "ios": {
       "infoPlist": {
-      
         "NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets."
       },
       "supportsTablet": true
@@ -29,10 +28,9 @@
         "backgroundColor": "#FFFFFF"
       }
     },
-   
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description":"./assets/icons/Capture.png"
+    "description": "./assets/icons/Capture.png"
   }
 }

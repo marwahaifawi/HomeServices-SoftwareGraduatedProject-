@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:3306' : 'http://192.168.1.110:3306';
+const API_URL = Platform.OS === 'ios' ? 'http://localhost:3306' : 'http://192.168.1.109:3306';
 const AuthScreen = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');

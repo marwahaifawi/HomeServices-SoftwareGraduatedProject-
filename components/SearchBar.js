@@ -3,33 +3,32 @@ import { StyleSheet, Text, View, TextInput, Image, Pressable } from 'react-nativ
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { theme } from '../core/theme';
 import { Ionicons } from '@expo/vector-icons';
-const SearchBar = () => {
+const SearchBar = ({width , margin}) => {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container , width]}>
             <TextInput style={styles.searchInput} placeholder='Search here' />
-            <Pressable>
+            <Pressable style={margin}>
                 <MaterialCommunityIcons name="home-search-outline" size={23} color='grey' />
             </Pressable>
-
-
         </View>
-
     )
 }
 const styles = StyleSheet.create({
     container: {
         height: 50,
         width: '100%',
-        marginTop: 10,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: theme.colors.surface,
-        borderRadius: 8
+        borderRadius: 8,
+        marginTop:10,
+        padding: 10,
+    
+
     },
     searchInput: {
         height: '100%',
         width: '90%',
-        paddingLeft: 10,
         fontSize: 17, 
         fontFamily:'FontTwo'
     },

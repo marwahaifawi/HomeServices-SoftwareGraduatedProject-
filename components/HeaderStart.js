@@ -1,16 +1,19 @@
 import React from "react";
-import { View, Text , StyleSheet , Image } from "react-native";
+import { View, Text , StyleSheet , Image, TouchableOpacity} from "react-native";
 import CardSquare from "./Cards/CardSquare";
 import AboutUs from '../components/Screens/AboutUs/AboutUs';
-const HeaderStart = ({navigation}) => {
+const HeaderStart = ({navigation , OnPress}) => {
   return (
     <>
+  
       <CardSquare
-        item= { {name: "Choose Maintenance Service", id: 11 }}
+        item= { {name: "Choose Maintenance Service" }}
         desc="Then add your service information to get our worker list."
         FontFamily={{fontFamily:'FontThree'}}
         imagename={require('../assets/headImage.png')}
+       OnPress={OnPress}
       />
+      
     </>
   );
 };

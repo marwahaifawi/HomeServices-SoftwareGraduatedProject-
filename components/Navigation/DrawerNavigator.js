@@ -1,9 +1,10 @@
 import * as React from "react";
 import TabsScreen from '../Screens/Home/TabsScreen'
-import { createDrawerNavigator } from "@react-navigation/drawer";
-const DrawerNavigator = () => {
+export default function  DrawerNavigator ({data}) 
+{
+  console.log(data+'tabscreen');
   return (
-  <TabsScreen/>
+  <TabsScreen email={data}/>
   );
 }
-export default DrawerNavigator;
+

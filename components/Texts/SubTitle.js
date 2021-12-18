@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 14,
     marginTop:10,
-    fontFamily: 'FontTwo'
+    fontFamily: 'FontTwo',
+    color:'gray'
   },
 });
 export default SubTitle;
